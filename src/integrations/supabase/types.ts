@@ -14,7 +14,353 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      application_students: {
+        Row: {
+          address: string | null
+          created_at: string
+          created_by: string
+          date_of_birth: string | null
+          email: string | null
+          full_name: string
+          id: string
+          passport_number: string | null
+          phone: string | null
+          status: Database["public"]["Enums"]["application_status"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          created_by: string
+          date_of_birth?: string | null
+          email?: string | null
+          full_name: string
+          id?: string
+          passport_number?: string | null
+          phone?: string | null
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          created_by?: string
+          date_of_birth?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          passport_number?: string | null
+          phone?: string | null
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_students_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      batch_students: {
+        Row: {
+          batch_id: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          created_by: string
+          enrollment_date: string
+          id: string
+          student_name: string
+        }
+        Insert: {
+          batch_id: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          created_by: string
+          enrollment_date?: string
+          id?: string
+          student_name: string
+        }
+        Update: {
+          batch_id?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          created_by?: string
+          enrollment_date?: string
+          id?: string
+          student_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "batch_students_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "language_batches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "batch_students_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          created_at: string
+          document_type: string
+          file_name: string
+          file_path: string
+          id: string
+          student_id: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          document_type: string
+          file_name: string
+          file_path: string
+          id?: string
+          student_id: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: string
+          file_name?: string
+          file_path?: string
+          id?: string
+          student_id?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "application_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      follow_ups: {
+        Row: {
+          created_at: string
+          created_by: string
+          follow_up_date: string
+          id: string
+          lead_id: string
+          notes: string
+          status: Database["public"]["Enums"]["lead_status"]
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          follow_up_date: string
+          id?: string
+          lead_id: string
+          notes: string
+          status: Database["public"]["Enums"]["lead_status"]
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          follow_up_date?: string
+          id?: string
+          lead_id?: string
+          notes?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follow_ups_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follow_ups_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      language_batches: {
+        Row: {
+          class_type: string
+          created_at: string
+          created_by: string
+          end_date: string
+          id: string
+          name: string
+          start_date: string
+          updated_at: string
+        }
+        Insert: {
+          class_type: string
+          created_at?: string
+          created_by: string
+          end_date: string
+          id?: string
+          name: string
+          start_date: string
+          updated_at?: string
+        }
+        Update: {
+          class_type?: string
+          created_at?: string
+          created_by?: string
+          end_date?: string
+          id?: string
+          name?: string
+          start_date?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "language_batches_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          created_at: string
+          created_by: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          purpose: Database["public"]["Enums"]["lead_purpose"]
+          status: Database["public"]["Enums"]["lead_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          purpose: Database["public"]["Enums"]["lead_purpose"]
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          purpose?: Database["public"]["Enums"]["lead_purpose"]
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      universities: {
+        Row: {
+          application_date: string | null
+          course_name: string
+          created_at: string
+          id: string
+          response_date: string | null
+          status: string | null
+          student_id: string
+          university_name: string
+        }
+        Insert: {
+          application_date?: string | null
+          course_name: string
+          created_at?: string
+          id?: string
+          response_date?: string | null
+          status?: string | null
+          student_id: string
+          university_name: string
+        }
+        Update: {
+          application_date?: string | null
+          course_name?: string
+          created_at?: string
+          id?: string
+          response_date?: string | null
+          status?: string | null
+          student_id?: string
+          university_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "universities_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "application_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +369,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      application_status:
+        | "documents_pending"
+        | "documents_submitted"
+        | "application_sent"
+        | "offer_received"
+        | "visa_applied"
+        | "completed"
+      lead_purpose: "application_process" | "language_class"
+      lead_status: "new" | "in_progress" | "converted"
+      user_role: "admin" | "staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +505,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      application_status: [
+        "documents_pending",
+        "documents_submitted",
+        "application_sent",
+        "offer_received",
+        "visa_applied",
+        "completed",
+      ],
+      lead_purpose: ["application_process", "language_class"],
+      lead_status: ["new", "in_progress", "converted"],
+      user_role: ["admin", "staff"],
+    },
   },
 } as const
