@@ -1,8 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, Upload, Globe, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Applications = () => {
+  const { toast } = useToast();
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -11,7 +14,12 @@ const Applications = () => {
           <h1 className="text-3xl font-bold text-foreground">Application Process</h1>
           <p className="text-muted-foreground">Manage university applications and documents</p>
         </div>
-        <Button>
+        <Button
+          onClick={() => toast({
+            title: "Add New Student",
+            description: "Student application form will be implemented here.",
+          })}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add New Student
         </Button>
@@ -90,7 +98,14 @@ const Applications = () => {
             </div>
           </div>
           
-          <Button className="mt-8" size="lg">
+          <Button 
+            className="mt-8" 
+            size="lg"
+            onClick={() => toast({
+              title: "Start Managing Applications",
+              description: "Application management features will be implemented here.",
+            })}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Start Managing Applications
           </Button>

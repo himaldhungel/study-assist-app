@@ -1,8 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, BookOpen, Users, Calendar } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Classes = () => {
+  const { toast } = useToast();
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -11,7 +14,12 @@ const Classes = () => {
           <h1 className="text-3xl font-bold text-foreground">Language Classes</h1>
           <p className="text-muted-foreground">Manage batches and student enrollments</p>
         </div>
-        <Button>
+        <Button
+          onClick={() => toast({
+            title: "Create New Batch",
+            description: "Batch creation form will be implemented here.",
+          })}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Create New Batch
         </Button>
@@ -63,7 +71,14 @@ const Classes = () => {
             </div>
           </div>
           
-          <Button className="mt-8" size="lg">
+          <Button 
+            className="mt-8" 
+            size="lg"
+            onClick={() => toast({
+              title: "Get Started with Classes",
+              description: "Class management features will be implemented here.",
+            })}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Get Started with Classes
           </Button>

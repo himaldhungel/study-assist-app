@@ -108,7 +108,13 @@ const Leads = () => {
           <h1 className="text-3xl font-bold text-foreground">Leads Management</h1>
           <p className="text-muted-foreground">Track and manage potential students</p>
         </div>
-        <Button className="self-start sm:self-auto">
+        <Button 
+          className="self-start sm:self-auto"
+          onClick={() => toast({
+            title: "Add New Lead",
+            description: "Lead creation form will be implemented here.",
+          })}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add New Lead
         </Button>
@@ -177,7 +183,13 @@ const Leads = () => {
           <Card>
             <CardContent className="pt-6 text-center">
               <p className="text-muted-foreground">No leads found matching your criteria.</p>
-              <Button className="mt-4">
+              <Button 
+                className="mt-4"
+                onClick={() => toast({
+                  title: "Add New Lead",
+                  description: "Lead creation form will be implemented here.",
+                })}
+              >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Your First Lead
               </Button>
@@ -227,13 +239,34 @@ const Leads = () => {
                   </div>
                 )}
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => toast({
+                      title: "Add Follow-up",
+                      description: `Follow-up for ${lead.name} will be added.`,
+                    })}
+                  >
                     Add Follow-up
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => toast({
+                      title: "Edit Lead",
+                      description: `Edit form for ${lead.name} will open.`,
+                    })}
+                  >
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => toast({
+                      title: "Convert Lead",
+                      description: `${lead.name} will be converted to student.`,
+                    })}
+                  >
                     Convert
                   </Button>
                 </div>
