@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { AddLeadForm } from "@/components/forms/AddLeadForm";
 
 interface Lead {
   id: string;
@@ -108,16 +109,7 @@ const Leads = () => {
           <h1 className="text-3xl font-bold text-foreground">Leads Management</h1>
           <p className="text-muted-foreground">Track and manage potential students</p>
         </div>
-        <Button 
-          className="self-start sm:self-auto"
-          onClick={() => toast({
-            title: "Add New Lead",
-            description: "Lead creation form will be implemented here.",
-          })}
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add New Lead
-        </Button>
+        <AddLeadForm onLeadAdded={fetchLeads} />
       </div>
 
       {/* Filters */}
@@ -183,16 +175,15 @@ const Leads = () => {
           <Card>
             <CardContent className="pt-6 text-center">
               <p className="text-muted-foreground">No leads found matching your criteria.</p>
-              <Button 
-                className="mt-4"
-                onClick={() => toast({
-                  title: "Add New Lead",
-                  description: "Lead creation form will be implemented here.",
-                })}
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Add Your First Lead
-              </Button>
+              <AddLeadForm 
+                onLeadAdded={fetchLeads}
+                trigger={
+                  <Button className="mt-4">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Your First Lead
+                  </Button>
+                }
+              />
             </CardContent>
           </Card>
         ) : (
