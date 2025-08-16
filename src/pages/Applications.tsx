@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, FileText, Upload, Globe, CheckCircle, User, Mail, Phone, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { AddStudentForm } from "@/components/forms/AddStudentForm";
+import { UploadDocumentsForm } from "@/components/forms/UploadDocumentsForm";
+import { TrackApplicationForm } from "@/components/forms/TrackApplicationForm";
+import { UpdateStatusForm } from "@/components/forms/UpdateStatusForm";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Student {
@@ -207,39 +210,40 @@ const Applications = () => {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Upload Documents",
-                      description: `Document upload for ${student.full_name} will be implemented.`,
-                    })}
-                  >
-                    <Upload className="mr-2 h-4 w-4" />
-                    Upload Documents
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Track Applications",
-                      description: `University application tracking for ${student.full_name} will be implemented.`,
-                    })}
-                  >
-                    <Globe className="mr-2 h-4 w-4" />
-                    Track Applications
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Update Status",
-                      description: `Status update for ${student.full_name} will be implemented.`,
-                    })}
-                  >
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Update Status
-                  </Button>
+                  <UploadDocumentsForm 
+                    studentId={student.id}
+                    studentName={student.full_name}
+                    onDocumentUploaded={fetchStudents}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        <Upload className="mr-2 h-4 w-4" />
+                        Upload Documents
+                      </Button>
+                    }
+                  />
+                  <TrackApplicationForm 
+                    studentId={student.id}
+                    studentName={student.full_name}
+                    onApplicationAdded={fetchStudents}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        <Globe className="mr-2 h-4 w-4" />
+                        Track Applications
+                      </Button>
+                    }
+                  />
+                  <UpdateStatusForm 
+                    studentId={student.id}
+                    studentName={student.full_name}
+                    currentStatus={student.status}
+                    onStatusUpdated={fetchStudents}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Update Status
+                      </Button>
+                    }
+                  />
                 </div>
               </CardContent>
             </Card>

@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, BookOpen, Users, Calendar, GraduationCap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { CreateBatchForm } from "@/components/forms/CreateBatchForm";
+import { AddStudentToBatchForm } from "@/components/forms/AddStudentToBatchForm";
+import { BatchDetailsDialog } from "@/components/dialogs/BatchDetailsDialog";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Batch {
@@ -192,28 +194,26 @@ const Classes = () => {
                   </div>
                   
                   <div className="flex gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => toast({
-                        title: "Add Students",
-                        description: `Student enrollment for ${batch.name} will be implemented.`,
-                      })}
-                    >
-                      <Users className="mr-2 h-4 w-4" />
-                      Add Students
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => toast({
-                        title: "View Details",
-                        description: `Detailed view for ${batch.name} will be implemented.`,
-                      })}
-                    >
-                      <GraduationCap className="mr-2 h-4 w-4" />
-                      View Details
-                    </Button>
+                    <AddStudentToBatchForm 
+                      batchId={batch.id}
+                      batchName={batch.name}
+                      onStudentAdded={fetchBatches}
+                      trigger={
+                        <Button variant="outline" size="sm">
+                          <Users className="mr-2 h-4 w-4" />
+                          Add Students
+                        </Button>
+                      }
+                    />
+                    <BatchDetailsDialog 
+                      batch={batch}
+                      trigger={
+                        <Button variant="outline" size="sm">
+                          <GraduationCap className="mr-2 h-4 w-4" />
+                          View Details
+                        </Button>
+                      }
+                    />
                   </div>
                 </CardContent>
               </Card>

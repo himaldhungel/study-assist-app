@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { AddLeadForm } from "@/components/forms/AddLeadForm";
+import { AddFollowUpForm } from "@/components/forms/AddFollowUpForm";
+import { EditLeadForm } from "@/components/forms/EditLeadForm";
+import { ConvertLeadForm } from "@/components/forms/ConvertLeadForm";
 
 interface Lead {
   id: string;
@@ -230,36 +233,34 @@ const Leads = () => {
                   </div>
                 )}
                 <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Add Follow-up",
-                      description: `Follow-up for ${lead.name} will be added.`,
-                    })}
-                  >
-                    Add Follow-up
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Edit Lead",
-                      description: `Edit form for ${lead.name} will open.`,
-                    })}
-                  >
-                    Edit
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => toast({
-                      title: "Convert Lead",
-                      description: `${lead.name} will be converted to student.`,
-                    })}
-                  >
-                    Convert
-                  </Button>
+                  <AddFollowUpForm 
+                    leadId={lead.id}
+                    leadName={lead.name}
+                    onFollowUpAdded={fetchLeads}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        Add Follow-up
+                      </Button>
+                    }
+                  />
+                  <EditLeadForm 
+                    lead={lead}
+                    onLeadUpdated={fetchLeads}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        Edit
+                      </Button>
+                    }
+                  />
+                  <ConvertLeadForm 
+                    lead={lead}
+                    onLeadConverted={fetchLeads}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        Convert
+                      </Button>
+                    }
+                  />
                 </div>
               </CardContent>
             </Card>
