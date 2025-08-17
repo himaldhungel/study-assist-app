@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, FileText, Upload, Globe, CheckCircle, User, Mail, Phone, MapPin, Calendar as CalendarIcon } from "lucide-react";
+import { Plus, FileText, Upload, Globe, CheckCircle, User, Mail, Phone, MapPin, Calendar as CalendarIcon, Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { AddStudentForm } from "@/components/forms/AddStudentForm";
 import { UploadDocumentsForm } from "@/components/forms/UploadDocumentsForm";
 import { TrackApplicationForm } from "@/components/forms/TrackApplicationForm";
 import { UpdateStatusForm } from "@/components/forms/UpdateStatusForm";
+import { StudentApplicationDetails } from "@/components/forms/StudentApllicationDetails";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Student {
@@ -209,7 +210,7 @@ const Applications = () => {
                   )}
                 </div>
                 
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <UploadDocumentsForm 
                     studentId={student.id}
                     studentName={student.full_name}
@@ -241,6 +242,16 @@ const Applications = () => {
                       <Button variant="outline" size="sm">
                         <CheckCircle className="mr-2 h-4 w-4" />
                         Update Status
+                      </Button>
+                    }
+                  />
+                  <StudentApplicationDetails
+                    studentId={student.id}
+                    onUpdate={fetchStudents}
+                    trigger={
+                      <Button variant="default" size="sm">
+                        <Eye className="mr-2 h-4 w-4" />
+                        View Details
                       </Button>
                     }
                   />

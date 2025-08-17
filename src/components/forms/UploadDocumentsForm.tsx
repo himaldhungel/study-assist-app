@@ -36,7 +36,24 @@ export function UploadDocumentsForm({ studentId, studentName, onDocumentUploaded
     try {
       setLoading(true);
       
-      const user = await supabase.auth.getUser();
+      // Get the current user
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error("You must be logged in to upload documents");
+      }
+
+      // Get the profile ID for the current user
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+
+      if (profileError || !profile) {
+        throw new Error("Profile not found");
+      }
+
       const fileExt = values.file.name.split('.').pop();
       const fileName = `${studentId}/${Date.now()}.${fileExt}`;
 
@@ -55,7 +72,7 @@ export function UploadDocumentsForm({ studentId, studentName, onDocumentUploaded
           document_type: values.document_type,
           file_name: values.file.name,
           file_path: fileName,
-          uploaded_by: user.data.user?.id!,
+          uploaded_by: profile.id, // Fixed: Use profile.id instead of user.id
         });
 
       if (dbError) throw dbError;

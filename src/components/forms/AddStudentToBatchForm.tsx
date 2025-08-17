@@ -47,7 +47,23 @@ export function AddStudentToBatchForm({ batchId, batchName, onStudentAdded, trig
     try {
       setLoading(true);
       
-      const user = await supabase.auth.getUser();
+      // Get the current user
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error("You must be logged in to add a student");
+      }
+
+      // Get the profile ID for the current user
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+
+      if (profileError || !profile) {
+        throw new Error("Profile not found");
+      }
       
       const { error } = await supabase
         .from("batch_students")
@@ -57,7 +73,7 @@ export function AddStudentToBatchForm({ batchId, batchName, onStudentAdded, trig
           contact_email: values.contact_email || null,
           contact_phone: values.contact_phone || null,
           enrollment_date: values.enrollment_date.toISOString().split('T')[0],
-          created_by: user.data.user?.id!,
+          created_by: profile.id, // Fixed: Use profile.id instead of user.id
         });
 
       if (error) throw error;
